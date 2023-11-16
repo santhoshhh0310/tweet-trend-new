@@ -22,9 +22,11 @@ environment {
             }
         }
 
-        stage('SonarQube Analysis') {
-            environment {
-                scannerHome = tool 'sonarqube-scanner' // Sonar Scanner name should match the tool definition.
+        stage("SonarQube-analysis") {
+            steps { 
+                environment {
+                    scannerHome = tool 'sonarqube-scanner' // Sonar Scanner name should match the tool definition.
+                }
             }
         }
     }
