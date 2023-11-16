@@ -1,10 +1,10 @@
 pipeline {
-    agent {label 'maven'}
+    agent { label 'maven' }
 
+    environment {
+        PATH = "/opt/apache-maven-3.9.5/bin:$PATH"
+    }
 
-environment {
-    PATH = "/opt/apache-maven-3.9.5/bin:$PATH"
-}
     stages {
         stage("Build") {
             steps {
@@ -22,15 +22,19 @@ environment {
             }
         }
 
-        stage("SonarQube-analysis") { 
+        stage("SonarQube-analysis") {
             environment {
                 scannerHome = tool 'sonarqube-scanner' // Sonar Scanner name should match the tool definition.
             }
-            steps {                                 // in the steps we are adding our sonar cube server that is with Sonar Cube environment.
-            withSonarQubeEnv('sonarqube-server') {
-                sh "${scannerHome}/bin/sonar-scanner" // This is going to communicate with our sonar cube server and send the analysis report.
+            steps {
+                script {
+                    // Use withSonarQubeEnv to configure the SonarQube environment
+                    withSonarQubeEnv('sonarqube-server') {
+                        // Run SonarQube analysis
+                        sh "${scannerHome}/bin/sonar-scanner"
+                    }
+                }
             }
         }
     }
-}
 }
