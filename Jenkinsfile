@@ -1,6 +1,6 @@
 def registry = 'https://cicdjfrog03.jfrog.io/'
-def imageName = 'cicdjfrog03.jfrog.io/valaxy-docker-local/samtrend'
-def version   = '2.1.2'
+def imageName = 'cicdjfrog03.jfrog.io/valaxy-docker/samtrend'
+def version = '2.1.2'
 
 pipeline {
     agent { label 'maven' }
@@ -87,17 +87,21 @@ pipeline {
           }
         }
     
-        stage (" Docker Publish "){
-        steps {
-            script {
-                echo '<--------------- Docker Publish Started --------------->'  
-                docker.withRegistry(registry, "Jfrog-new"){
-                app.push()
-                }    
-                echo '<--------------- Docker Publish Ended --------------->'  
-                }
-            }
+        stage("Docker Publish") {
+    steps {
+        script {
+            echo '<--------------- Docker Publish Started --------------->'  
+
+            // Use withDockerRegistry and provide credentials securely
+            withDockerRegistry(credentialsId: 'Jfrog-new', url: registry) {
+                // Use --password-stdin for improved security
+                app.push("--password-stdin")
+            }    
+
+            echo '<--------------- Docker Publish Ended --------------->'  
         }
+    }
+}
 
     }
 }
