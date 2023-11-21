@@ -86,17 +86,20 @@ pipeline {
             }
           }
         }
-    
-        stage (" Docker Publish "){
-        steps {
-            script {
-                echo '<--------------- Docker Publish Started --------------->'  
-                docker.withRegistry(registry, 'Jfrog-cred'){
+        stage("Docker Publish") {
+    steps {
+        script {
+            echo '<--------------- Docker Publish Started --------------->'  
+            
+            docker.withRegistry(registry, 'Jfrog-cred') {
+                // Push the Docker image
                 app.push()
-                }    
-                echo '<--------------- Docker Publish Ended --------------->'  
-                }
-            }
+            }    
+            
+            echo '<--------------- Docker Publish Ended --------------->'  
         }
+    }
+}
+
     }
 }
