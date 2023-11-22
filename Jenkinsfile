@@ -96,10 +96,10 @@ pipeline {
                       // Use withDockerRegistry and provide credentials securely
                       withDockerRegistry(credentialsId: 'jenkins11', url: registry) {
                           // Use --password-stdin for improved security
-                          app.withRun("-e CI_COMMIT_SHA=${env.GIT_COMMIT} --password-stdin") { c ->
+                          docker.image(imageName + ":" + version).withRun { c ->
                             sh "docker push ${imageName}:${version}"
-                      }
-                      }    
+                        }
+                    }    
 
                       echo '<--------------- Docker Publish Ended --------------->'  
                 }
