@@ -1,6 +1,6 @@
 def registry = 'https://cicdjfrog03.jfrog.io/'
 def imageName = 'cicdjfrog03.jfrog.io/valaxy-docker-local/samimage'
-def version = 'a-z,2.1.2'
+def version = '2.1.2'
 
 pipeline {
     agent { label 'maven' }
