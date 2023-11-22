@@ -1,5 +1,5 @@
 def registry = 'https://cicdjfrog03.jfrog.io/'
-def imageName = 'cicdjfrog03.jfrog.io/valaxy-docker/samtrend'
+def imageName = 'cicdjfrog03.jfrog.io/valaxy-docker-local/samtrend'
 def version = '2.1.2'
 
 pipeline {
@@ -103,5 +103,5 @@ pipeline {
     }
 }
 
-    }
+}
 }
