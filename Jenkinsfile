@@ -93,7 +93,7 @@ pipeline {
             echo '<--------------- Docker Publish Started --------------->'  
 
             // Use withDockerRegistry and provide credentials securely
-            withDockerRegistry(credentialsId: 'Jfrog-new', url: registry) {
+            withDockerRegistry(credentialsId: 'Jfrog-new', url: https:cicdjfrog03.jfrog.io/artifactory/valaxy-docker/) {
                 // Use --password-stdin for improved security
                 app.push("--password-stdin")
             }    
