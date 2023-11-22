@@ -96,7 +96,7 @@ pipeline {
                       // Use withDockerRegistry and provide credentials securely
                       withDockerRegistry(credentialsId: 'jenkins11', url: registry) {
                           // Use --password-stdin for improved security
-                          app.push("--password-stdin")
+                          app.push("--password-stdin", env.IMAGE_NAME)
                       }    
 
                       echo '<--------------- Docker Publish Ended --------------->'  
