@@ -93,7 +93,7 @@ pipeline {
             echo '<--------------- Docker Publish Started --------------->'  
 
             // Use withDockerRegistry and provide credentials securely
-            withDockerRegistry(credentialsId: 'jenkins-jfrog', url: registry) {
+            withDockerRegistry(credentialsId: 'jenkins11', url: registry) {
                 // Use --password-stdin for improved security
                 app.push("--password-stdin")
             }    
