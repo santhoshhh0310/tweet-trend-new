@@ -7,6 +7,7 @@ pipeline {
 
     environment {
         PATH = "/opt/apache-maven-3.9.5/bin:$PATH"
+        IMAGE_NAME = "${imageName}:${version}"
     }
 
     stages {
@@ -81,27 +82,26 @@ pipeline {
         steps {
             script {
                echo '<--------------- Docker Build Started --------------->'
-               app = docker.build(imageName+":"+version)
+               app = docker.build(env.IMAGE_NAME)
                echo '<--------------- Docker Build Ends --------------->'
             }
           }
         }
     
         stage("Docker Publish") {
-    steps {
-        script {
-            echo '<--------------- Docker Publish Started --------------->'  
+            steps {
+                 script {
+                     echo '<--------------- Docker Publish Started --------------->'  
 
-            // Use withDockerRegistry and provide credentials securely
-            withDockerRegistry(credentialsId: 'jenkins11', url: registry) {
-                // Use --password-stdin for improved security
-                app.push("--password-stdin")
-            }    
+                      // Use withDockerRegistry and provide credentials securely
+                      withDockerRegistry(credentialsId: 'jenkins11', url: registry) {
+                          // Use --password-stdin for improved security
+                          app.push("--password-stdin")
+                      }    
 
-            echo '<--------------- Docker Publish Ended --------------->'  
+                      echo '<--------------- Docker Publish Ended --------------->'  
+                }
+             }
         }
     }
-}
-
-}
 }
