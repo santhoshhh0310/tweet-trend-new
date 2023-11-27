@@ -108,7 +108,9 @@ pipeline {
         stage("Deploy") {
             steps {
                  script {
-                    sh './deploy.sh'
+                    echo '<--------------Helm Deploy Started-------------->'
+                    sh 'helm install santrend santrend-0.1.0.tgz'
+                    echo '<--------------Helm Deploy Ends----------------->'
                  }
             }
         }
